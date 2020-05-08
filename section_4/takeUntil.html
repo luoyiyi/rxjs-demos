@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../Rx.js"></script>
+</head>
+
+<body>
+  <h1> takeUntil </h1>
+  <p> 在某件事情发生时，让一个 observable 直送出 完成(complete)讯息 </p>
+  <pre style="font-size:20px;line-height:50px">
+    source : -----0-----1-----2------3--...
+    click  : ----------------------c----
+                    takeUntil(click)
+    example: -----0-----1-----2----|
+
+  </pre>
+  <script>
+
+  const source = Rx.Observable.interval(1000);
+  const click = Rx.Observable.fromEvent(document.body, 'click');
+  const example = source.takeUntil(click);     
+
+  example.subscribe({
+      next: (value) => { console.log(value); },
+      error: (err) => { console.log('Error: ' + err); },
+      complete: () => { console.log('complete'); }
+  });
+  </script>
+</body>
+
+</html>

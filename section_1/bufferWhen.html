@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../Rx.js"></script>
+</head>
+
+<body>
+  <script>
+
+    const clicks = Rx.Observable.fromEvent(document, 'click');
+    const buffered = clicks.bufferWhen(() =>
+      Rx.Observable.interval(1000 + Math.random() * 4000)
+    );
+    buffered.subscribe(x => console.log(x));
+
+    // function textWhen(callback) {
+    //     if(typeof callback === "function") {
+    //         setTimeout(() => {
+    //             callback("hhh");
+    //         }, 5000);
+    //     }
+    // }
+
+
+    // const ob1 = Rx.Observable.interval(1000);
+    // const ob2 = Rx.Observable.fromEvent(document, "click");
+    // const ob = ob1.bufferWhen(() => {
+    //             return Rx.Observable.bindCallback(textWhen)()
+    //         }).take(1)
+    //     .subscribe((value) => {
+    //         console.log(value);
+    //     });
+
+  </script>
+</body>
+
+</html>

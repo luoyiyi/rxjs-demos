@@ -24,6 +24,8 @@
 
     // const ob = Rx.Observable.of(2, 4, 6, 8, 10, 12).every(x => x % 2 === 0)
 
+    // const ob = Rx.Observable.of(2, 5, 7, 9, 30, 40).mapTo(2);
+
     ob.subscribe({
       next(value) {
         console.log(value)

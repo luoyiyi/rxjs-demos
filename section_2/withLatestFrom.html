@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../Rx.js"></script>
+</head>
+
+<body>
+  <h1> withLatestFrom </h1>
+  <p> 只有在主要的 observable 送出新的值时，才会执行 callback，附随的 observable 只是在背景下运作 </p>
+  <pre style="font-size:20px;line-height:50px">
+  ob1: -----h-----e-----l-----l-----o|
+  ob2: ---0---1---0---0---0---1|
+       ob1.withLatestFrom(ob2)
+  ob:  -----h-----e-----l-----L-----O|
+
+  </pre>
+  <script>
+    const ob1 = Rx.Observable.from('hello').zip(Rx.Observable.interval(500), (x, y) => x);
+    const ob2 = Rx.Observable.from([0,1,0,0,0,1]).zip(Rx.Observable.interval(300), (x, y) => x);
+
+    const ob = ob1.withLatestFrom(ob2, (x, y) => {
+            return y === 1 ? x.toUpperCase() : x;
+        });
+
+    ob.subscribe({
+      next(value) {
+        console.log(value)
+      },
+      complete() {
+        console.log('complete')
+      },
+      error() {
+        console.log('error')
+      }
+    })
+
+  </script>
+</body>
+
+</html>

@@ -14,7 +14,11 @@
   </pre>
   <script>
 
-    const ob = Rx.Observable.interval(1000).take(3)
+    const ob = Rx.Observable.interval(1000).take(6)
+                // .first()          // 取第一个元素直接结束，相当于take(1)
+                // .takeLast(2)       // 取最后两个值
+                // .last()          // 取最后一个值
+                // .startWith(-1)   //向元素前插入一个值
 
     ob.subscribe({
       next(value) {
