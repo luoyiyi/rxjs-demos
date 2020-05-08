@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../Rx.js"></script>
+</head>
+
+<body>
+  <script>
+
+    // const ob = Rx.Observable.from(new Promise(resolve => {
+    //   setTimeout(() => {
+    //     resolve('success!')
+    //   }, 3000)
+    // }))
+
+    // const ob = Rx.Observable.from([1, 2, 3, 4, 5])
+
+    // const ob = Rx.Observable.from(new Set([1, 2, 3, 4, 5]))
+
+    const iteratorMap = {
+      age: 18,
+      name: 'John',
+      gender: 'male'
+    }
+
+    iteratorMap[Symbol.iterator] = function () {
+      let index = 0
+      const queue = ['name', 'age', 'gender']
+      return {
+        next: () => {
+          const done = !(index < queue.length)
+          return {
+            done,
+            value: done ? undefined : this[queue[index++]]
+          }
+        }
+      }
+    }
+
+    const ob = Rx.Observable.from(iteratorMap)
+
+    ob.subscribe({
+      next(value) {
+        console.log(value)
+      },
+      complete() {
+        console.log('complete')
+      },
+      error() {
+        console.log('error')
+      }
+    })
+
+  </script>
+</body>
+
+</html>

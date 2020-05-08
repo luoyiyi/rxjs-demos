@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../Rx.js"></script>
+  <style>
+    html,
+    body {
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="drag" style="width:100px;height:100px;background:#eee;position:absolute"></div>
+  <script>
+
+    const element = document.getElementById('drag')
+
+    const mousedown = Rx.Observable.fromEvent(element, 'mousedown').map(event => {
+      const pos = event.target.getBoundingClientRect()
+      return {
+        fixPosX: event.clientX - pos.left,
+        fixPosY: event.clientY - pos.top
+      }
+    })
+
+    const mousemove = Rx.Observable.fromEvent(document, 'mousemove')
+
+    const mouseup = Rx.Observable.fromEvent(document, 'mouseup')
+
+    mousedown.mergeMap(event => mousemove, (ovalue, event) => {
+      return {
+        x: event.clientX - ovalue.fixPosX,
+        y: event.clientY - ovalue.fixPosY,
+      }
+    }).takeUntil(mouseup).repeat().do(value => {
+      element.style.cssText += `;left:${value.x}px;top:${value.y}px`
+    }).subscribe()
+
+
+
+  </script>
+</body>
+
+</html>

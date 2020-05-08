@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../Rx.js"></script>
+</head>
+
+<body>
+  <pre style="font-size:20px;line-height:50px">
+  ob1: --0--1--2--3--4|
+    combineLatest(ob1,ob2)
+  ob2: ---0---100---200---300--...
+  </pre>
+  <script>
+
+    // const ob1 = Rx.Observable.interval(1000).take(5)
+    // const ob2 = Rx.Observable.interval(1500).map(index => index * 100)
+
+    // const ob = Rx.Observable.combineLatest(ob1, ob2)
+    const ob1 = Rx.Observable.of(1,2,3,4,5).observeOn(Rx.Scheduler.async)
+    const ob2 = Rx.Observable.of(1)
+
+    const ob = Rx.Observable.combineLatest(ob1, ob2, (x, y) => {
+      return x + y
+    })
+
+    ob.subscribe({
+      next(value) {
+        console.log(value)
+      },
+      complete() {
+        console.log('complete')
+      },
+      error() {
+        console.log('error')
+      }
+    })
+
+  </script>
+</body>
+
+</html>

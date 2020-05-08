@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../Rx.js"></script>
+</head>
+
+<body>
+  <script>
+
+    const ob1 = Rx.Observable.interval(1000).take(3)
+    const ob2 = Rx.Observable.interval(1500).map(index => index * 100)
+
+    const ob = Rx.Observable.merge(ob1, ob2)
+
+    ob.subscribe({
+      next(value) {
+        console.log(value)
+      },
+      complete() {
+        console.log('complete')
+      },
+      error() {
+        console.log('error')
+      }
+    })
+
+  </script>
+</body>
+
+</html>

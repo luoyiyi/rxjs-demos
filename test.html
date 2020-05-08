@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="./Rx.js"></script>
+</head>
+
+<body>
+  <script>
+
+    // combineLatest  取得各个 observable 最后送出的值，再输出成一个值
+    const ob1 = Rx.Observable.interval(1000).take(3);
+    const ob2 = Rx.Observable.interval(600).take(5);
+    const ob = ob1.combineLatest(ob2, (x, y) => x + y);
+
+
+    ob.subscribe((value) => {
+      console.log(value);
+    }, (error) => {
+      console.log(error)
+    }, (complete) => {
+      console.log("completed");
+    })
+    
+
+  </script>
+</body>
+
+</html>

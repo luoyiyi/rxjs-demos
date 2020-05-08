@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../Rx.js"></script>
+</head>
+
+<body>
+  <script>
+
+    const ob = Rx.Observable.of(1, 2, 3, '呵')
+
+    ob.subscribe({
+      next(value) {
+        console.log(value)
+      },
+      complete() {
+        console.log('complete')
+      },
+      error() {
+        console.log('error')
+      }
+    })
+
+    // function error(n) {
+    //   if (n == 1) throw new Error('error')
+    //   else console.log(n)
+    // }
+
+    // function printError() {
+    //   for (let i = 0; i < 10; i += 1) {
+    //     setTimeout(() => {
+    //       error(i)
+    //     }, 0)
+    //   }
+    // }
+
+    // printError()
+
+  </script>
+</body>
+
+</html>

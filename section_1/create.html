@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../Rx.js"></script>
+</head>
+
+<body>
+  <script>
+
+    const ob = Rx.Observable.create(observer => {
+      observer.next(1)
+      observer.next(2)
+      observer.complete()
+      // observer.error()
+    })
+
+    ob.subscribe({
+      next(value) {
+        console.log(`subscribe one: ${value}`)
+      },
+      complete() {
+        console.log('complete')
+      },
+      error() {
+        console.log('error')
+      }
+    })
+
+    setTimeout(() => {
+      ob.subscribe({
+        next(value) {
+          console.log(`subscribe two: ${value}`)
+        },
+        complete() {
+          console.log('complete')
+        },
+        error() {
+          console.log('error')
+        }
+      })
+    }, 2000)
+
+  </script>
+</body>
+
+</html>

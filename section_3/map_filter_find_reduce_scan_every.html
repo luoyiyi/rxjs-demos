@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../Rx.js"></script>
+</head>
+
+<body>
+  <script>
+
+    const ob = Rx.Observable.interval(1000).map(value => value * 100)
+
+    // const ob = Rx.Observable.interval(1000).filter(value => value % 2 === 0)
+
+    // const ob = Rx.Observable.of(1, 2, 3, 1, 2, 5).find(value => value % 2 === 0)
+
+    // const ob = Rx.Observable.of(1, 2, 3, 4, 5, 6).reduce((x, y) => x + y)
+
+    // const ob = Rx.Observable.of(1, 2, 3, 4, 5, 6).scan((x, y) => x + y)
+
+    // const ob = Rx.Observable.of(2, 4, 6, 8, 10, 12).every(x => x % 2 === 0)
+
+    ob.subscribe({
+      next(value) {
+        console.log(value)
+      },
+      complete() {
+        console.log('complete')
+      },
+      error() {
+        console.log('error')
+      }
+    })
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../Rx.js"></script>
+</head>
+
+<body>
+  <pre style="font-size:20px;line-height:50px">
+  click: --0--1--2--3---4---...
+  ob1: ---------0--------1------...
+    ob1.buffer(ob2)
+  ob: ----------[0,1]----[2,3,4]------...
+  </pre>
+  <script>
+
+    const click = Rx.Observable.fromEvent(document, 'click')
+    const ob1 = Rx.Observable.interval(1000)/*.do(v => {
+      console.log(v)
+    })*/
+
+    const ob = ob1.buffer(click)
+
+    ob.subscribe({
+      next(value) {
+        console.log(`print:`,value)
+      },
+      complete() {
+        console.log('complete')
+      },
+      error() {
+        console.log('error')
+      }
+    })
+
+  </script>
+</body>
+
+</html>

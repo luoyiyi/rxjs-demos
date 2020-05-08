@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../Rx.js"></script>
+</head>
+
+<body>
+  <pre style="font-size:20px;line-height:50px">
+  </pre>
+  <input id="input" type="" name="" value="">
+  <script>
+
+    let index = 0
+    const click = Rx.Observable.fromEvent(document, 'click').do(() => {
+      index += 1
+      document.getElementById('input').value = index
+    })
+
+
+    // const ob = click.debounce(() => Rx.Observable.of(0).delay(1000))
+    const ob = click.debounceTime(1000)
+
+    ob.subscribe({
+      next(value) {
+        console.log(value)
+      },
+      complete() {
+        console.log('complete')
+      },
+      error() {
+        console.log('error')
+      }
+    })
+
+  </script>
+</body>
+
+</html>
