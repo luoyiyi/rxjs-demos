@@ -30,6 +30,12 @@
       return x + y
     }) */
 
+    // const ob1 = Rx.Observable.of(1,2,3,4,5).observeOn(Rx.Scheduler.async)
+    // const ob2 = Rx.Observable.of(1)
+    // const ob = ob1.combineLatest(ob2, (x, y) => {
+    //   return x + y
+    // })
+
     ob.subscribe({
       next(value) {
         console.log(value)
