@@ -10,7 +10,12 @@
 </head>
 
 <body>
+  <h1>concatMap</h1>
+  <p>map 加上 concatAll 的简化写法，会先处理前一个送出的 observable 处再理下一个 observable</p>
   <pre style="font-size:20px;line-height:50px">
+  click : -----------c--c------------------...
+    concatMap(c => Rx.Observable.interval(1000).take(3))
+  ob: -------------0-1-2-0-1-2---------...
   </pre>
   <script>
 

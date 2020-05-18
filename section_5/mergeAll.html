@@ -10,13 +10,26 @@
 </head>
 
 <body>
+  <h1>mergeAll</h1>
+  <p> merge 他可以让多个 observable 同时送出元素，mergeAll 也是同样的道理，它会把二维的 observable 转成一维的，并且能够同时处理所有的 observable</p>
+
   <pre style="font-size:20px;line-height:50px">
+click  : ---------c-c------------------c--.. 
+        map(e => Rx.Observable.interval(1000))
+source : ---------o-o------------------o--..
+                   \ \                  \----0----1----3|
+                    \ ----0----1----2----3|
+                     ----0----1----2----3|
+                     mergeAll()
+ob: ----------------00---11---22---33----0----1----3|
   </pre>
   <script>
 
     const click = Rx.Observable.fromEvent(document, 'click')
 
-    const ob = click.map(event => Rx.Observable.interval(1000).take(3))
+    const source = Rx.Observable.interval(1000).take(4)
+
+    const ob = click.map(event => source)
       .mergeAll()
 
     ob.subscribe({
