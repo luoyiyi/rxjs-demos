@@ -12,17 +12,7 @@
 <body>
   <script>
 
-    // const ob = Rx.Observable.interval(1000).take(3).multicast(new Rx.Subject())
-
-    // let index = 0
-    // const ob = 
-
-    // setInterval(() => {
-    //   ob.next(index++)
-    // }, 1000)
-
-    // const ob = Rx.Observable.interval(1000).take(3).share()
-
+    // 例一：
     const ob = new Rx.Subject()
 
     let index = 0
@@ -41,7 +31,82 @@
       })
     }, 2000)
 
-    // ob.connect()
+    
+
+    // 例二：
+    // const source = Rx.Observable.interval(1000).take(3);
+    // const observeA = {
+    //   next: (value) => {console.log("A:",value)}
+    // };
+    // const observeB = {
+    //   next: (value) => {console.log("B:",value)}
+    // };
+    // const subject = new Rx.Subject();
+    // source.subscribe(subject);
+    // subject.subscribe(observeA);
+    // setTimeout(() => {
+    //   subject.subscribe(observeB);
+    // }, 1000)
+
+
+    // 例三：
+    // const ob = Rx.Observable.interval(1000)
+    //                   .take(3)
+    //                   .multicast(new Rx.Subject())
+    // // 透过 multicast 来挂载一个 subject 之后这个 observable(source) 的订阅其实都是订阅到 subject 上。
+
+    // ob.subscribe(value => {
+    //   console.log('subscribe 1:       value:' + value)
+    // })
+
+    // ob.connect(); // 启动订阅。multicast 返回的是 ConnectableObservable，它只是一个有 connect() 方法的 Observable
+
+    // setTimeout(() => {
+    //   ob.subscribe(value => {
+    //     console.log('subscribe 2:       value:' + value)
+    //   })
+    // }, 2000)
+
+
+    // 例四
+    // const ob = Rx.Observable.interval(1000)
+    //           .take(3)
+    //           .multicast(new Rx.Subject())
+    //           .refCount();  // refCount 的作用是，当有第一个订阅者时，多播 Observable 会自动地启动执行，而当最后一个订阅者离开时，多播 Observable 会自动地停止执行。
+
+    // const ob1 = Rx.Observable.interval(1000)
+    //           .take(3)
+    //           .publish()   // publish() 等价于 multicast(new Rx.Subject())
+    //           .refCount();
+
+    // const ob2 = Rx.Observable.interval(1000)
+    //           .take(3)
+    //           .publishReplay(1)   // subject的变形 publishReplay(1)等价于 multicast(new Rx.ReplaySubject(1))
+    //           .refCount();
+
+    // const ob4 = Rx.Observable.interval(1000)
+    //           .take(3)
+    //           .publishBehavior(0)   // subject的变形 publishReplay(1)等价于 multicast(new Rx.BehaviorSubject(0))
+    //           .refCount();
+
+    // const ob5 = Rx.Observable.interval(1000)
+    //           .take(3)
+    //           .publishLast()   // subject的变形 publishReplay(1)等价于 multicast(new Rx.AsyncSubject())
+    //           .refCount();
+
+    // const ob = Rx.Observable.interval(1000)
+    //           .take(3)
+    //           .share()   // share 是 publish + refcount 的简化
+
+    // ob.subscribe(value => {
+    //   console.log('subscribe 1:       value:' + value)
+    // })
+
+    // setTimeout(() => {
+    //   ob.subscribe(value => {
+    //     console.log('subscribe 2:       value:' + value)
+    //   })
+    // }, 2000)
 
   </script>
 </body>
