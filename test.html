@@ -12,20 +12,106 @@
 <body>
   <script>
 
-    // combineLatest  取得各个 observable 最后送出的值，再输出成一个值
-    const ob1 = Rx.Observable.interval(1000).take(3);
-    const ob2 = Rx.Observable.interval(600).take(5);
-    const ob = ob1.combineLatest(ob2, (x, y) => x + y);
-
-
-    ob.subscribe((value) => {
-      console.log(value);
-    }, (error) => {
-      console.log(error)
-    }, (complete) => {
-      console.log("completed");
-    })
     
+
+    let index = 0
+    const observable = Rx.Observable.create((observer) => {
+      setInterval(() => {
+        observer.next(index++)
+      }, 1000);
+    });
+
+    // const observable = Rx.Observable.interval(1000);
+
+    // observable.subscribe(x => console.log(x));
+
+    // const subscription = observable.subscribe(x => console.log(x));
+
+    // setTimeout(() => {
+    //   subscription.unsubscribe();
+    // }, 5000);
+
+
+
+// ==================================================================================
+    // const source = Rx.Observable.of(1, 2, 3);
+
+    // function map(source, callback) {
+    //     return Rx.Observable.create((observer) => {
+    //         return source.subscribe(
+    //             (value) => { 
+    //                 try{
+    //                     observer.next(callback(value));
+    //                 } catch(e) {
+    //                     observer.error(e);
+    //                 }
+    //             },
+    //             (err) => { observer.error(err); },
+    //             () => { observer.complete() }
+    //         )
+    //     })
+    // }
+    // const double = map(source, (item) => item * 2);
+
+    // double.subscribe(console.log);
+
+
+
+
+// ==================================================================================
+    // subject的使用
+    const subject = new Rx.Subject();
+
+    subject.subscribe({
+      next: (v) => console.log('observerA: ' + v)
+    });
+    subject.subscribe({
+      next: (v) => console.log('observerB: ' + v)
+    });
+
+    subject.next(1);
+    subject.next(2);
+
+
+
+    // subject的使用看起来和Observable一样
+    const observable = Rx.Observable.create((observer) => {
+      observer.next(1);
+      observer.next(2);
+    });
+
+    observable.subscribe({
+      next: (v) => console.log('observerA: ' + v)
+    });
+
+    observable.subscribe({
+      next: (v) => console.log('observerB: ' + v)
+    });
+
+
+    
+    // subject既是被观察者，同时又是观察者
+    const source = Rx.Observable.interval(1000).take(3);
+    const observeA = {
+      next: (value) => {console.log("A:",value)}
+    };
+    const observeB = {
+      next: (value) => {console.log("B:",value)}
+    };
+    const subject = new Rx.Subject();
+    source.subscribe(subject);
+    subject.subscribe(observeA);
+    setTimeout(() => {
+      subject.subscribe(observeB);
+    }, 1000)
+
+
+    
+
+
+    
+    
+
 
   </script>
 </body>
