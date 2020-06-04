@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../Rx.js"></script>
+</head>
+
+<body>
+  <script>
+    // 异步执行（微任务）
+    // 任务在next tick之前执行，即比宏任务先执行
+    // 内部实现使用 promise
+    // 性能优于事件队列
+    const log = console.log;
+    setTimeout(() => log(1));          // 异步 宏任务
+    Rx.Scheduler.asap.schedule(() => log(2));       // 异步 微任务
+    Rx.Scheduler.queue.schedule(() => log(3));      // 同步
+
+  </script>
+</body>
+
+</html>

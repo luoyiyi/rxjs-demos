@@ -11,8 +11,8 @@
 
 <body>
   <script>
-
-    const ob = Rx.Observable.interval(3000).multicast(new Rx.ReplaySubject())
+    // 在某些时候我们会希望 Subject 代表事件，但又能在新订阅时重新发送最后的几个元素，这时我们就可以用 ReplaySubject
+    const ob = Rx.Observable.interval(1000).take(5).multicast(new Rx.ReplaySubject(2))
 
     const sub1 = ob.subscribe(value => {
       console.log(`subscribe 1:       value:${value}`)

@@ -11,7 +11,8 @@
 
 <body>
   <script>
-
+    // AsyncSubject 会在 subject 结束后才送出最后一个值，其实这个行为跟 Promise 很像，
+    // 都是等到事情结束后送出一个值，但实务上我们非常非常少用到 AsyncSubject
     const ob = Rx.Observable.interval(1000).take(2).multicast(new Rx.AsyncSubject())
 
     const sub1 = ob.subscribe(value => {

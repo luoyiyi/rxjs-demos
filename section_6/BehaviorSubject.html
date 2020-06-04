@@ -12,7 +12,10 @@
 <body>
   <script>
 
-    const ob = Rx.Observable.interval(3000).multicast(new Rx.BehaviorSubject(-1))
+    // 很多时候我们会希望 Subject 能代表当下的状态，而不是单存的事件发送，
+    // 也就是说如果今天有一个新的订阅，我们希望 Subject 能立即给出最新的值
+
+    const ob = Rx.Observable.interval(1000).take(3).multicast(new Rx.BehaviorSubject(-1))
 
     const sub1 = ob.subscribe(value => {
       console.log(`subscribe 1:       value:${value}`)
