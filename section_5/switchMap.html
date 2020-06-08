@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="../Rx.js"></script>
+</head>
+
+<body>
+  <h1>switch</h1>
+  <p>
+    map 加上 switch 简化的写法
+</p>
+  <pre style="font-size:20px;line-height:50px">
+source : -----------c--c-----------------...
+        switchMap(c => Rx.Observable.interval(100).take(3))
+example: -------------0--0-1-2-----------...
+  </pre>
+  <script>
+
+// var source = Rx.Observable.fromEvent(document.body, 'click');
+
+// var example = source
+//                 .map(e => Rx.Observable.interval(1000).take(3))
+//                 .switch();
+
+// example.subscribe({
+//     next: (value) => { console.log(value); },
+//     error: (err) => { console.log('Error: ' + err); },
+//     complete: () => { console.log('complete'); }
+// });
+
+
+
+var source = Rx.Observable.fromEvent(document.body, 'click');
+
+var example = source
+                .switchMap(
+                    e => Rx.Observable.interval(100).take(3)
+                );
+
+example.subscribe({
+    next: (value) => { console.log(value); },
+    error: (err) => { console.log('Error: ' + err); },
+    complete: () => { console.log('complete'); }
+});
+
+  </script>
+</body>
+
+</html>

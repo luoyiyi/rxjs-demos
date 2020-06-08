@@ -14,16 +14,16 @@
 
     
 
-    let index = 0
-    const observable = Rx.Observable.create((observer) => {
-      setInterval(() => {
-        observer.next(index++)
-      }, 1000);
-    });
+    // let index = 0
+    // const observable = Rx.Observable.create((observer) => {
+    //   setInterval(() => {
+    //     observer.next(index++)
+    //   }, 1000);
+    // });
 
     // const observable = Rx.Observable.interval(1000);
 
-    // observable.subscribe(x => console.log(x));
+    // // observable.subscribe(x => console.log(x));
 
     // const subscription = observable.subscribe(x => console.log(x));
 
@@ -60,37 +60,39 @@
 
 // ==================================================================================
     // subject的使用
-    const subject = new Rx.Subject();
+    // const subject = new Rx.Subject();
 
-    subject.subscribe({
-      next: (v) => console.log('observerA: ' + v)
-    });
-    subject.subscribe({
-      next: (v) => console.log('observerB: ' + v)
-    });
+    // subject.subscribe({
+    //   next: (v) => console.log('observerA: ' + v)
+    // });
+    // subject.subscribe({
+    //   next: (v) => console.log('observerB: ' + v)
+    // });
 
-    subject.next(1);
-    subject.next(2);
+    // subject.next(1);
+    // subject.next(2);
 
 
 
-    // subject的使用看起来和Observable一样
-    const observable = Rx.Observable.create((observer) => {
-      observer.next(1);
-      observer.next(2);
-    });
+    // // subject的使用看起来和Observable一样
+//     const observable = Rx.Observable.create((observer) => {
+//       observer.next(1);
+//       observer.next(2);
+//     });
 
-    observable.subscribe({
-      next: (v) => console.log('observerA: ' + v)
-    });
-
-    observable.subscribe({
-      next: (v) => console.log('observerB: ' + v)
-    });
+//     observable.subscribe({
+//       next: (v) => console.log('observerA: ' + v)
+//     });
+// setTimeout(() => {
+//   observable.subscribe({
+//       next: (v) => console.log('observerB: ' + v)
+//     });
+// }, 3000);
+    
 
 
     
-    // subject既是被观察者，同时又是观察者
+    // // subject既是被观察者，同时又是观察者
     const source = Rx.Observable.interval(1000).take(3);
     const observeA = {
       next: (value) => {console.log("A:",value)}

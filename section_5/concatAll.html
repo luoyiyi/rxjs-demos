@@ -21,11 +21,14 @@
   ob:    ----0--1---0---1--...
   </pre>
   <script>
-
+    // 有时我们的 Observable 发送的元素又是一个 observable，就像是二维数组，数组里面的元素是数组，
+    //这时我们就可以用 concatAll 把它摊平成一维数组，大家也可以直接把 concatAll 想成把所有元素 concat 起来
     const click = Rx.Observable.fromEvent(document, 'click')
 
-    const ob = click.map(event => Rx.Observable.interval(1000).take(3))
-      .concatAll()
+    // const ob = click.map(event => Rx.Observable.interval(1000).take(3))
+    //   .concatAll()
+
+    const ob = click.concatMap(event => Rx.Observable.interval(1000).take(3));
 
     ob.subscribe({
       next(value) {

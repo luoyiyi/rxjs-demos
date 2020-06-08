@@ -18,13 +18,16 @@
   ob:  ---[0, 0]---[1,100]---[2,200]---[3,300]---[4,400]|
   </pre>
   <script>
-
+    // 在所有 observables 发出后，将它们的值作为数组发出
     const ob1 = Rx.Observable.interval(1000).take(5)
     const ob2 = Rx.Observable.interval(1500).map(index => index * 100)
 
+    const ob = Rx.Observable.zip(ob1, ob2)
+
     // const ob = Rx.Observable.zip(ob1, ob2, (x, y) => x + y) 
 
-    const ob = ob1.zip(ob2, (x, y) => x + y)
+    // const ob = ob1.zip(ob2, (x, y) => x + y)
+    
 
     ob.subscribe({
       next(value) {
